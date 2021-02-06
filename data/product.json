@@ -1,0 +1,19 @@
+ [
+     {
+        "name":"Asus laptop" ,
+        "price": "2000",
+        "description":"some description",
+        "reatings":"4",
+        "images": [
+          {
+            "public_id":"/images/P_setting_xxx_0_90_end_185.png" ,
+            "url": "https://www.asus.com/media/Odin/Websites/global/SubSeries/global_ZenBook-Pro_1/P_setting_xxx_0_90_end_185.png"
+          },
+        ],
+        "category":"Electronics",
+        "seller": "Ebay",
+        "stock": "100",
+        "numOfReviews": "1",
+        "reviews": []
+     }
+ ]

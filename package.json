@@ -1,0 +1,25 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "A sample ecommerce site with MERN stack",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "NODE_ENV=DEVELOPMENT nodemon server",
+    "prod": "NODE_ENV=PRODUCTION nodemon server"
+  },
+  "keywords": [
+    "MERN",
+    "SHOPIT",
+    "shopit"
+  ],
+  "author": "titusdishon@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.15",
+    "nodemon": "^2.0.7"
+  }
+}
