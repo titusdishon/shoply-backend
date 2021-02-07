@@ -7,7 +7,8 @@
   "scripts": {
     "start": "node server.js",
     "dev": "NODE_ENV=DEVELOPMENT nodemon server",
-    "prod": "NODE_ENV=PRODUCTION nodemon server"
+    "prod": "NODE_ENV=PRODUCTION nodemon server",
+    "seeder":"node ./utils/seeder.js"
   },
   "keywords": [
     "MERN",

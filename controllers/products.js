@@ -11,9 +11,15 @@ export const newProduct = async (req, res, next) => {
   });
 };
 
-export const getProducts = (req, res, next) => {
+
+//get all products in the database 
+export const getProducts = async (req, res, next) => {
+
+  const products =await Product.find();
   res.status(200).json({
-    success: true,
-    message: "This route shows all products in the database",
+    success: true, 
+    count: products.length,
+    products
   });
+  
 };

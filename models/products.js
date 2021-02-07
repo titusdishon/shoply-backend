@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+//PRODUCT data models with mongoose
 const productSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -10,8 +11,13 @@ const productSchema = new mongoose.Schema({
   price: {
     type: Number,
     required: [true, "Please enter a product price"],
-    maxLength: [100, "Product name can not exceed 5 characters"],
+    maxLength: [5, "Product name can not exceed 5 characters"],
     default: 0.0,
+  },
+  currency: {
+    type: String,
+    required: [true, "Please enter a product price currency"],
+    maxLength: [100, "Product currency can not exceed 100 characters"],
   },
   description: {
     type: String,
