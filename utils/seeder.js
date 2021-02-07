@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import connectDb from "../config/database.js";
 import products from "../data/products.js";
 
-dotenv.config({ path: "../config/config.env" });
+dotenv.config({ path: "./config/config.env" });
 
 connectDb();
 
