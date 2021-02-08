@@ -7,6 +7,7 @@ import Product from "../models/products.js";
 import ErrorHandler from "../utils/errorHandler.js";
 import catchAsyncErrors from "../middlewares/catchAsyncErrors.js";
 import APIFeatures from "../utils/apiFeatures.js";
+
 //product api should be /api/v1/admin/product/new => admin
 
 export const newProduct = catchAsyncErrors(async (req, res, next) => {
