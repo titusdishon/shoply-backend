@@ -40,8 +40,16 @@ const userSchema = new mongoose.Schema({
         type: "string",
         default: "user",
     },
-
+    isActive: {
+        type: "boolean",
+        required: true,
+        default: true,
+    },
     createdAt: {
+        type: Date,
+        default: Date.now(),
+    },
+    updatedAt: {
         type: Date,
         default: Date.now(),
     },
