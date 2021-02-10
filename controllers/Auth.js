@@ -6,7 +6,6 @@ import sendToken from "../utils/jwtToken.js";
 import { sendEmail } from "../utils/sendEmail.js";
 import crypto from "crypto";
 
-
 //Register user =>/api/v1/register
 export const registerUser = catchAsyncErrors(async (req, res, next) => {
   const { name, email, password } = req.body;
@@ -23,7 +22,6 @@ export const registerUser = catchAsyncErrors(async (req, res, next) => {
   sendToken(user, 200, res);
 });
 
-
 export const loginUser = catchAsyncErrors(async (req, res, next) => {
   const { email, password } = req.body;
   if (!password || !email) {
@@ -33,8 +31,8 @@ export const loginUser = catchAsyncErrors(async (req, res, next) => {
   if (!user) {
     return next(new ErrorHandler("Invalid email or password", 401));
   }
-  if (!user.isActive){
-      return next(new ErrorHandler("Your account has beed suspended", 401))      
+  if (!user.isActive) {
+    return next(new ErrorHandler("Your account has beed suspended", 401));
   }
   const isPasswordMatched = await user.comparePassword(password);
   if (!isPasswordMatched) {
@@ -156,7 +154,7 @@ export const updateUserProfile = catchAsyncErrors(async (req, res, next) => {
   const newUserData = {
     name: req.body.name,
     email: req.body.email,
-    updatedAt: new Date(Date.now())
+    updatedAt: new Date(Date.now()),
   };
   //TODO: Update user avatar
 
@@ -206,43 +204,45 @@ export const getUserDetails = catchAsyncErrors(async (req, res, next) => {
 //update user  profile admin function =>/api/v1/admin/user/:id
 
 export const updateUser = catchAsyncErrors(async (req, res, next) => {
-    const newUserData = {
-      name: req.body.name,
-      email: req.body.email,
-      role: req.body.role,
-      updatedAt: new Date(Date.now()),
-    };
+  const newUserData = {
+    name: req.body.name,
+    email: req.body.email,
+    role: req.body.role,
+    updatedAt: new Date(Date.now()),
+  };
 
-    const user = await User.findByIdAndUpdate(req.params.id, newUserData, {
-      new: true,
-      runValidators: true,
-      useFindAndModify: false,
-    });
-  
-    res.status(200).json({
-      success: true,
-      user,
-    });
+  const user = await User.findByIdAndUpdate(req.params.id, newUserData, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
   });
+
+  res.status(200).json({
+    success: true,
+    user,
+  });
+});
 
 //delete user (this is not a real user delete functionality, we justy deactivate the account and they will not be able to login)
 // api=>/api/user/delete;
 
-
 export const deactivateUser = catchAsyncErrors(async (req, res, next) => {
-     
-    const user = await User.findById(req.params.id);
-     
-    if (!user) {
-        return next( new ErrorHandler(`User with the provided id ${req.params.id} does not exist`));
-    }
-    //if the user was to be deleted, we would have to remove their avatar from the cloudinary server 
+  const user = await User.findById(req.params.id);
 
-    user.isActive=false;
-    user.save();
+  if (!user) {
+    return next(
+      new ErrorHandler(
+        `User with the provided id ${req.params.id} does not exist`
+      )
+    );
+  }
+  //if the user was to be deleted, we would have to remove their avatar from the cloudinary server
 
-    res.status(200).json({
-        success: true,
-        message:"User has been successfully deleted"
-    })
-})
+  user.isActive = false;
+  user.save();
+
+  res.status(200).json({
+    success: true,
+    message: "User has been successfully deleted",
+  });
+});

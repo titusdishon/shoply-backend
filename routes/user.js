@@ -14,7 +14,7 @@ import {
   getAllUsers,
   getUserDetails,
   updateUser,
-  deactivateUser
+  deactivateUser,
 } from "../controllers/Auth.js";
 
 router.route("/register").post(registerUser);
@@ -23,10 +23,18 @@ router.route("/logout").get(logoutUser);
 router.route("/password/forgot").post(forgotPassword);
 router.route("/reset/:token").post(resetPassword);
 router.route("/me").get(isAuthenticatedUser, getUserProfile);
-router.route("/password/update").put(isAuthenticatedUser,changePassword);
-router.route("/me/update").put(isAuthenticatedUser,updateUserProfile);
-router.route("/users/all").get(isAuthenticatedUser,authorizeRoles('admin'),getAllUsers);
-router.route("/user/details/:id").get(isAuthenticatedUser,authorizeRoles('admin'),getUserDetails);
-router.route("/admin/user/update/:id").put(isAuthenticatedUser,authorizeRoles('user', 'admin'),updateUser);
-router.route("/admin/user/delete/:id").get(isAuthenticatedUser,authorizeRoles('admin'),deactivateUser);
+router.route("/password/update").put(isAuthenticatedUser, changePassword);
+router.route("/me/update").put(isAuthenticatedUser, updateUserProfile);
+router
+  .route("/users/all")
+  .get(isAuthenticatedUser, authorizeRoles("admin"), getAllUsers);
+router
+  .route("/user/details/:id")
+  .get(isAuthenticatedUser, authorizeRoles("admin"), getUserDetails);
+router
+  .route("/admin/user/update/:id")
+  .put(isAuthenticatedUser, authorizeRoles("user", "admin"), updateUser);
+router
+  .route("/admin/user/delete/:id")
+  .get(isAuthenticatedUser, authorizeRoles("admin"), deactivateUser);
 export default router;
