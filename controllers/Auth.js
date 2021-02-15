@@ -5,18 +5,24 @@ import catchAsyncErrors from "../middlewares/catchAsyncErrors.js";
 import sendToken from "../utils/jwtToken.js";
 import { sendEmail } from "../utils/sendEmail.js";
 import crypto from "crypto";
+import cloudinary from "cloudinary";
 
 //Register user =>/api/v1/register
 export const registerUser = catchAsyncErrors(async (req, res, next) => {
+  const result = await cloudinary.uploader.upload(req.body.avatar, {
+    folder: "e-avatars",
+    width: 150,
+    crop: "scale",
+  });
+
   const { name, email, password } = req.body;
   const user = await User.create({
     name,
     email,
     password,
     avatar: {
-      public_id: "upload/v1612812435/sample",
-      url:
-        "https://res.cloudinary.com/titusdishon-com/image/upload/v1612812435/sample.jpg",
+      public_id: result.public_id,
+      url: result.secure_url,
     },
   });
   sendToken(user, 200, res);

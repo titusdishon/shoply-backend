@@ -23,7 +23,7 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please enter a product description"],
   },
-  reatings: {
+  ratings: {
     type: Number,
     default: 0,
   },
