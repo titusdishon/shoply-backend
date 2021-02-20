@@ -7,7 +7,9 @@ import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import cloudinary from "cloudinary";
 import fileupload from "express-fileupload";
+import dotenv from "dotenv";
 
+dotenv.config()
 const app = express();
 
 app.use(express.json());
