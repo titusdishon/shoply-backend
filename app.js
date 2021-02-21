@@ -8,10 +8,35 @@ import bodyParser from "body-parser";
 import cloudinary from "cloudinary";
 import fileupload from "express-fileupload";
 import dotenv from "dotenv";
+import swaggerUI from "swagger-ui-express";
+import swaggerJsdoc from "swagger-jsdoc";
 
-dotenv.config()
+//swagger config
+const options = {
+    definition: {
+        openapi: '3.0.0',
+        info: {
+            title: 'EShop swagger APIS',
+            version: '1.0.0',
+            definition: "All api documentations for the eshop project"
+        },
+        servers:[
+            {
+                url:"http://localhost:4000"
+            }
+        ]
+    },
+    apis: ['./routes/*.js']
+};
+
+const swaggerSpecs = await swaggerJsdoc(options);
 const app = express();
+//swagger serve
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerSpecs));
 
+//environment config
+dotenv.config()
+//app configurations
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
