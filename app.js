@@ -7,27 +7,54 @@ import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import cloudinary from "cloudinary";
 import fileupload from "express-fileupload";
-import dotenv from "dotenv";
+import swaggerUI from "swagger-ui-express";
+import swaggerJsdoc from "swagger-jsdoc";
+import payments from "./routes/payments.js";
+import {ConfigEnv} from "./config/config.js"
 
-dotenv.config()
+ConfigEnv()
+
+//swagger config
+const options = {
+    definition: {
+        openapi: '3.0.0',
+        info: {
+            title: 'EShop swagger APIS',
+            version: '1.0.0',
+            definition: "All api documentations for the eshop project"
+        },
+        servers:[
+            {
+                url:"http://localhost:4000"
+            }
+        ]
+    },
+    apis: ['./routes/*.js']
+};
+
+const swaggerSpecs = await swaggerJsdoc(options);
 const app = express();
+//swagger serve
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerSpecs));
 
+
+//app configurations
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(fileupload());
 //setup cloudinary config
-
 cloudinary.config({
-  cloud_name: 'titusdishon-com',
-  api_key: '376158673733585',
-  api_secret: '-U13mLgi2LjhGIjihJx11fYO14A',
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_CLOUD_API_KEY,
+  api_secret: process.env.CLOUDINARY_CLOUD_SECRET,
 });
 
 //products apis
 app.use(`/api/v1`, products);
 app.use(`/api/v1`, auth);
 app.use(`/api/v1`, order);
+app.use(`/api/v1`, payments);
 //handle errors with middlewares
 app.use(errorMiddleware);
 
