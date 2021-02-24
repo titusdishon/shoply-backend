@@ -37,7 +37,6 @@ const app = express();
 //swagger serve
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerSpecs));
 
-
 //app configurations
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));

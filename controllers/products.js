@@ -19,7 +19,7 @@ export const newProduct = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-//get all products in the database
+//get all products in the database(user)=/api/v1/products
 export const getProducts = catchAsyncErrors(async (req, res, next) => {
   // return next(new ErrorHandler('My error'));
   const resPerPage = 7;
@@ -40,6 +40,16 @@ export const getProducts = catchAsyncErrors(async (req, res, next) => {
     productsCount,
     filteredProductsCount,
     resPerPage,
+    products,
+  });
+});
+
+
+//get all products in the database(admin)=/api/v1/admin/products
+export const getAdminProducts = catchAsyncErrors(async (req, res, next) => {
+  const products = await Product.find();
+  res.status(200).json({
+    success: true,
     products,
   });
 });
