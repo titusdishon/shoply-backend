@@ -12,14 +12,14 @@ const router = express.Router();
 router.route("/order/new").post(isAuthenticatedUser, newOrder);
 router
   .route("/order/:id")
-  .get(isAuthenticatedUser, authorizeRoles("user"), getOrder);
+  .get(isAuthenticatedUser, authorizeRoles("user","admin"), getOrder);
 router.route("/orders/me").get(isAuthenticatedUser, getMyOrder);
 router
   .route("/admin/orders")
-  .get(isAuthenticatedUser, authorizeRoles("user"), getAllOrders);
+  .get(isAuthenticatedUser, authorizeRoles("user",'admin'), getAllOrders);
 router
   .route("/admin/order/:id")
-  .put(isAuthenticatedUser, authorizeRoles("user"), updateOrder)
-  .delete(isAuthenticatedUser, authorizeRoles("user"), deleteOrder);
+  .put(isAuthenticatedUser, authorizeRoles("user","admin"), updateOrder)
+  .delete(isAuthenticatedUser, authorizeRoles("user","admin"), deleteOrder);
 
 export default router;

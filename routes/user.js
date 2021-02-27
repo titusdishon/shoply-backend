@@ -75,7 +75,7 @@ router.route("/me").get(isAuthenticatedUser, getUserProfile);
 router.route("/password/update").put(isAuthenticatedUser, changePassword);
 router.route("/me/update").put(isAuthenticatedUser, updateUserProfile);
 router
-    .route("/users/all")
+    .route("/admin/users/all")
     .get(isAuthenticatedUser, authorizeRoles("admin"), getAllUsers);
 router
     .route("/user/details/:id")
@@ -85,5 +85,5 @@ router
     .put(isAuthenticatedUser, authorizeRoles("user", "admin"), updateUser);
 router
     .route("/admin/user/delete/:id")
-    .get(isAuthenticatedUser, authorizeRoles("admin"), deactivateUser);
+    .delete(isAuthenticatedUser, authorizeRoles("admin"), deactivateUser);
 export default router;

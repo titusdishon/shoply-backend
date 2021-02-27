@@ -22,7 +22,7 @@ router
   .delete(isAuthenticatedUser, deleteProduct);
 router.route("/review").put(isAuthenticatedUser, createProductReview);
 router.route("/reviews").get(isAuthenticatedUser, getProductsReview);
-router.route("/reviews").delete(isAuthenticatedUser, deleteReview);
+router.route("/admin/review/delete").delete(isAuthenticatedUser, deleteReview);
 
 
 //admin routes

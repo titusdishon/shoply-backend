@@ -17,13 +17,14 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    retquired: [true, "Please enter your password"],
+    required: [true, "Please enter your password"],
     minlength: [6, "Password must be at least 6 characters"],
     select: false,
   },
   phoneNumber: {
     type: String,
-    retquired: [true, "Please enter your phoneNumber"],
+    required: [true, "Please enter your phoneNumber"],
+    unique: true,
     minLength: [10, "Please enter a valid phone number"],
   },
   avatar: {

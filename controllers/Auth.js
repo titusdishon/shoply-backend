@@ -15,11 +15,12 @@ export const registerUser = catchAsyncErrors(async (req, res, next) => {
         crop: "scale",
     });
 
-    const {name, email, password} = req.body;
+    const {name, email, password,phoneNumber} = req.body;
     const user = await User.create({
         name,
         email,
         password,
+        phoneNumber,
         avatar: {
             public_id: result.public_id,
             url: result.secure_url,
@@ -163,6 +164,7 @@ export const updateUserProfile = catchAsyncErrors(async (req, res, next) => {
     const newUserData = {
         name: req.body.name,
         email: req.body.email,
+        phoneNumber: req.body.phoneNumber,
         updatedAt: new Date(Date.now()),
     };
     if (req.body.avatar !== '') {
@@ -229,6 +231,7 @@ export const updateUser = catchAsyncErrors(async (req, res, next) => {
         name: req.body.name,
         email: req.body.email,
         role: req.body.role,
+        phoneNumber: req.body.phoneNumber,
         updatedAt: new Date(Date.now()),
     };
 
@@ -259,7 +262,7 @@ export const deactivateUser = catchAsyncErrors(async (req, res, next) => {
     }
     //if the user was to be deleted, we would have to remove their avatar from the cloudinary server
 
-    user.isActive = false;
+    user.isActive = !user.isActive;
     user.save();
 
     res.status(200).json({

@@ -93,6 +93,30 @@ export const updateProduct = catchAsyncErrors(async (req, res, next) => {
     if (!product) {
         return next(new ErrorHandler("Product not found", 404));
     }
+    let images = []
+    if (typeof req.body.images === 'string') {
+        images.push(req.body.images);
+    } else {
+        images = req.body.images;
+    }
+    if (images!==undefined){
+        //delete product images on cloudinary
+        for (let i = 0; i < product.images.length; i++) {
+            await cloudinary.v2.uploader.destroy(product.images[i].public_id)
+        }
+        let imagesLinks = [];
+        for (let i = 0; i < images.length; i++) {
+            const result = await cloudinary.v2.uploader.upload(images[i], {
+                folder: 'products'
+            });
+            imagesLinks.push({
+                public_id: result.public_id,
+                url: result.secure_url
+            })
+        }
+        req.body.images = imagesLinks;
+    }
+
     product = await Product.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
         runValidators: true,
@@ -111,7 +135,12 @@ export const deleteProduct = catchAsyncErrors(async (req, res, next) => {
     if (!product) {
         return next(new ErrorHandler("Product not found", 404));
     }
-    await Product.remove();
+
+    //delete product images on cloudinary
+    for (let i = 0; i < product.images.length; i++) {
+        await cloudinary.v2.uploader.destroy(product.images[i].public_id)
+    }
+    await product.remove();
     res.status(200).json({
         success: true,
         message: "Deleted successfully",
@@ -126,6 +155,7 @@ export const createProductReview = catchAsyncErrors(async (req, res, next) => {
         user: req.user._id,
         name: req.user.name,
         rating: Number(rating),
+        createdAt:new Date(Date.now()),
         comment,
     };
     const product = await Product.findById(productId);
