@@ -97,10 +97,14 @@ const router = express.Router();
  *         stock: number
  *         numOfReviews: 2
  *         reviews:
- *             user: userId
- *             name: 4some name
- *             rating: number
- *             comment: some comment
+ *             - user: userId
+ *               name: some name
+ *               rating: number
+ *               comment: some comment
+ *             - user: userId
+ *               name: some name
+ *               rating: number
+ *               comment: some comment
  *         user: some user id
  *
  */
@@ -140,10 +144,27 @@ const router = express.Router();
  *
  */
 
-
+/**
+ * @swagger
+ * /api/v1/products:
+ *   get:
+ *     summary: Get all products for all users
+ *     tags: [Products]
+ *     responses:
+ *       200:
+ *         description: success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Success'
+ *       500:
+ *         description: Some server error
+ */
 router
     .route("/products")
     .get(getProducts);
+
+
 /**
  * @swagger
  * /api/v1/product/{id}:
@@ -330,7 +351,7 @@ router.route("/admin/review/delete").delete(isAuthenticatedUser, deleteReview);
 
 /**
  * @swagger
- * /api/v1/products:
+ * /api/v1/admin/products:
  *   get:
  *     summary: Get all products for admin users only
  *     tags: [Products]
