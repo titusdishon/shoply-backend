@@ -11,6 +11,7 @@ import swaggerUI from "swagger-ui-express";
 import swaggerJsdoc from "swagger-jsdoc";
 import payments from "./routes/payments.js";
 import {ConfigEnv} from "./config/config.js"
+import cors from "cors";
 
 ConfigEnv()
 
@@ -36,7 +37,10 @@ const swaggerSpecs = await swaggerJsdoc(options);
 const app = express();
 //swagger serve
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerSpecs));
+//cors config
+app.use(cors())
 
+  
 //app configurations
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
