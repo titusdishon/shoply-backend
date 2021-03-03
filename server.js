@@ -5,7 +5,6 @@ import connectDb from "./config/database.js";
 
 //handle uncaught exceptions
 process.on("uncaughtException", (err)=>{
-  console.log(`ERROR: ${err.message}`);
   console.log("Shutdown server due to unhandled promise exception");
   process.exit();
 })

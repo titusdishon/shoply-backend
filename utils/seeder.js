@@ -10,9 +10,7 @@ connectDb();
 const seedProducts = async () => {
   try {
     await Product.deleteMany();
-    console.log("Products are successfully deleted");
     await Product.insertMany(products);
-    console.log("Products are successfully inserted");
   } catch (error) {
     console.error(error.message);
     process.exit();
